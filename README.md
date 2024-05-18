@@ -2,7 +2,7 @@
 
 ## Course review auth app client Live Link
 
-### https://sports-market-weld.vercel.app/auth/sign-in
+### https://sports-market-cart.vercel.app/auth/sign-in
 
 ## Sports market app server Live Link
 

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AppModal from "../components/ui/AppModal";
 import AppTable from "../components/ui/AppTable";
-import { useDeleteProductMutation, useGetProductQuery } from "../redux/features/products/productApi";
+import { useBulkDeleteProductMutation, useDeleteProductMutation, useGetProductQuery } from "../redux/features/products/productApi";
 import { Link } from "react-router-dom";
 import AppPopover from "../components/ui/AppPopover";
 import { BsThreeDotsVertical } from "react-icons/bs";
@@ -76,19 +76,62 @@ const ManageProducts = () => {
 
     const infoQuery = useGetProductQuery(queryParams);
 
-    const [deleteUser, { isError, error, isLoading, isSuccess }] = useDeleteProductMutation();
+    const [deleteProduct, { isError, error, isLoading, isSuccess }] = useDeleteProductMutation();
 
     useEffect(() => {
         if (isError) {
-            toast.error("User delete unsuccessful!");
+            toast.error("Product delete unsuccessful!");
         } else if (!isLoading && isSuccess) {
-            toast.success('User deleted Successful!')
+            toast.success('Product deleted Successful!')
         }
     }, [isError, error, isLoading, isSuccess])
 
+    const [bulkDeleteProduct] = useBulkDeleteProductMutation();
 
+    const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+    const handleCheckboxChange = (productId: string) => {
+        // Step 3: Update the selectedProductIds state based on checkbox changes
+        setSelectedProductIds((prevSelectedIds) => {
+            if (prevSelectedIds.includes(productId)) {
+                // If already selected, remove from the list
+                return prevSelectedIds.filter((id) => id !== productId);
+            } else {
+                // If not selected, add to the list
+                return [...prevSelectedIds, productId];
+            }
+        });
+    };
+
+    const handleBulkDelete = async () => {
+
+        await bulkDeleteProduct({ productsId: selectedProductIds }).unwrap().then((res: { success: any; message: any; }) => {
+            if (!res.success) {
+                toast.error(res.message || "Something went wrong");
+            }
+            toast.success("Bulk Delete Product successfully!");
+
+        }).catch((res: { success: any; message: any; }) => {
+            if (!res.success) {
+                toast.error(res.message || "Something went wrong");
+            }
+        });
+    };
 
     const columns = [
+        {
+            title: '',
+            dataIndex: '_id',
+            render: (id: string) => {
+                return (
+                    <input
+                        type="checkbox"
+                        onChange={() => handleCheckboxChange(id)}
+                        checked={selectedProductIds.includes(id)}
+                        className="cursor-pointer"
+                    />
+                )
+            }
+        },
         {
             title: 'Name',
             dataIndex: 'name',
@@ -182,7 +225,7 @@ const ManageProducts = () => {
                                         <button className="text-xs text-white px-4 py-1 rounded-full w-full bg-bgred">Remove</button>}
                                         cancelButtonTitle="No, Don’t"
                                         primaryButtonTitle="Yes. Remove"
-                                        primaryButtonAction={() => deleteUser(record?._id)}
+                                        primaryButtonAction={() => deleteProduct(record?._id)}
                                     >
                                         <div className='max-w-80'>
                                             <p className="text-center text-[#828282] pt-4 text-lg">Are you sure  Remove <span className="text-textDark font-medium">{record?.name}</span> from the user list?</p>
@@ -343,7 +386,19 @@ const ManageProducts = () => {
                 infoQuery={infoQuery}
                 setPage={setPage}
                 headerText="products List"
-
+                tabs={
+                    <div>
+                        {
+                            selectedProductIds.length > 0 &&
+                            <button
+                                className="roundedBtn bg-red/80 hover:bg-red"
+                                onClick={handleBulkDelete}
+                            >
+                                Delete selected product
+                            </button>
+                        }
+                    </div>
+                }
                 button={
                     <Link to={"/add-product"}>
                         <button className="roundedBtn">Add New Product</button>

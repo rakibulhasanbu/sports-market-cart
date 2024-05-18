@@ -18,7 +18,7 @@
     @apply hover:bg-primary text-primary select-none text-xs 2xl:text-sm hover:text-white rounded 2xl:rounded-md font-medium w-full lg:w-fit text-center px-2 md:px-4 2xl:px-6 py-1 2xl:py-2 border border-primary;
   }
   .roundedBtn {
-    @apply bg-textDark hover:bg-black/90 text-sm md:text-base text-white py-1 md:py-2 2xl:py-3 px-3 lg:px-6 rounded-full;
+    @apply bg-textDark hover:bg-black/90 text-sm md:text-base text-white py-1 md:py-2 2xl:py-2.5 px-3 lg:px-6 rounded-full;
   }
   .app-small.ant-spin .ant-spin-dot-item {
     @apply !bg-primary;

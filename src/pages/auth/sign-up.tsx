@@ -39,7 +39,7 @@ const SignUp = () => {
     }
     const { name, password, email } = data
     const submittedData = {
-      role: "user", password, email, name
+      role: "seller", password, email, name
     }
     registerUser(submittedData).unwrap()
       .then((res: ResponseSuccessType) => {

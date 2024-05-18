@@ -2,23 +2,30 @@ import { ImStatsDots } from "react-icons/im";
 import { Link, useLocation } from "react-router-dom";
 import { TbBrandProducthunt } from "react-icons/tb";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
+import { useAppSelector } from "../../redux/hook";
+import { HiOutlineUserGroup } from "react-icons/hi";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
+  const { user } = useAppSelector((state) => state.auth);
+  console.log(user);
+  const adminSideLinks = (user?.role === 'admin') ? [
+    {
+      path: "/sellers-list",
+      Icon: HiOutlineUserGroup,
+      label: "Sellers List",
+      relativePath2: "",
+      relativePath: "",
+    },
+  ] : [];
 
   const sidebarLinks = [
-    // {
-    //   item: "System Users",
-    //   navs: [
-    //     {
-    //       path: "/",
-    //       Icon: RxDashboard,
-    //       label: "Dashboard",
-    //       relativePath2: "",
-    //       relativePath: "",
-    //     },
-    //   ],
-    // },
+    {
+      item: (user?.role === 'admin') ? "System Users" : "",
+      navs: [
+        ...adminSideLinks
+      ],
+    },
     {
       item: "Products",
       navs: [

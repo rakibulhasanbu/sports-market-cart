@@ -30,9 +30,9 @@ export type IGenericErrorMessage = {
 // types.ts
 
 export enum UserRole {
-  USER = "user",
   ADMIN = "admin",
-  SUPER_ADMIN = "superAdmin",
+  MANAGER = "manager",
+  SELLER = "seller",
 }
 
 export enum UserGender {
@@ -97,7 +97,7 @@ export enum ChatGroupType {
 }
 
 export interface User {
-  userId: string;
+  _id: string;
   name: string;
   email: string;
   password: string;

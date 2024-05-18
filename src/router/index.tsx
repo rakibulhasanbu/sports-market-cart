@@ -8,6 +8,7 @@ import AddProduct from "../pages/AddProduct";
 import SalesHistory from "../pages/SalesHistory";
 import EditProduct from "../pages/EditProduct";
 import CreateVariant from "../pages/CreateVariant";
+import ManageUser from "../pages/ManageUser";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             {
                 path: "/sales-history",
                 element: <SalesHistory />
+            },
+            {
+                path: "/sellers-list",
+                element: <ManageUser />
             },
         ]
     },
