@@ -6,6 +6,7 @@ type TAppModalProps = {
   children: ReactNode;
   title?: string;
   subTitle?: string;
+  footerHave?: boolean;
   primaryButtonTitle?: string;
   primaryButtonAction?: () => void;
   cancelButtonTitle?: string;
@@ -21,6 +22,7 @@ const AppModal = ({
   title,
   subTitle,
   children,
+  footerHave = true,
   primaryButtonTitle,
   primaryButtonAction,
   cancelButtonTitle,
@@ -59,7 +61,7 @@ const AppModal = ({
         onOk={() => handleOpen(false)}
         onCancel={() => handleOpen(false)}
         footer={
-          (primaryButtonTitle || cancelButtonTitle) ?
+          footerHave && (primaryButtonTitle || cancelButtonTitle) ?
             <div className="w-full flex items-center justify-center gap-2 lg:pt-2">
               {cancelButtonTitle && (
                 <button

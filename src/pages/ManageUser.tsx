@@ -1,9 +1,10 @@
 import AppModal from "../components/ui/AppModal";
 import { toast } from "react-toastify";
-import { useEffect, useMemo, useState } from "react";
+import { SetStateAction, useEffect, useMemo, useState } from "react";
 import AppTable from "../components/ui/AppTable";
 import { User } from "../types/common";
 import { useDeleteUserMutation, useEditUserMutation, useGetSellersQuery } from "../redux/features/user/userApi";
+import AppSelect from "../components/ui/AppSelect";
 
 const ManageUser = () => {
     const [page, setPage] = useState(1);
@@ -32,7 +33,7 @@ const ManageUser = () => {
 
     const handleUserRoleChange = async (id: string) => {
         const updateData = {
-            id, role: "manager"
+            id, role: "manager", branch: selectedBranch
         }
 
         await updateUser(updateData).unwrap().then(res => {
@@ -54,6 +55,23 @@ const ManageUser = () => {
             toast.success('User deleted Successful!')
         }
     }, [isError, error, isLoading, isSuccess])
+
+    const branches = [
+        'Dhaka',
+        'Barishal',
+        'Chattogram',
+        'Khulna',
+        'Mymensingh',
+        'Rajshahi',
+        'Rangpur',
+        'Sylhet'
+    ];
+
+    const [selectedBranch, setSelectedBranch] = useState('');
+
+    const handleChange = (event: any) => {
+        setSelectedBranch(event.target.value);
+    };
 
     const columns = [
         {
@@ -82,12 +100,23 @@ const ManageUser = () => {
                     <div className=''>
                         <AppModal button={
                             <button className="text-xs text-white px-4 py-1 rounded-full bg-primary">Make Manager</button>}
+                            footerHave={selectedBranch !== ""}
                             cancelButtonTitle="No, Don’t"
                             primaryButtonTitle="Yes. Make Manager"
                             primaryButtonAction={() => handleUserRoleChange(record?._id)}
                         >
                             <div className='max-w-80'>
-                                <p className="text-center text-[#828282] pt-4 text-lg">Are you sure Make manager <span className="text-textDark font-medium">{record?.name}</span> from Seller list?</p>
+                                <p className="text-center text-[#828282] pt-4 text-lg">Are you sure Make manager <span className="text-textDark font-medium">{record?.name}</span> Seller list?</p>
+                                <div className='flex items-center gap-2 justify-center pt-4 font-medium'>
+
+                                    <label htmlFor="branch">Select Branch for Manager</label>
+                                    <select className="border cursor-pointer rounded p-1" id="branch" value={selectedBranch} onChange={handleChange}>
+                                        <option value="" disabled>Select a branch</option>
+                                        {branches?.map((branch, index) => (
+                                            <option key={index} value={branch}>{branch}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
                         </AppModal>
                     </div>

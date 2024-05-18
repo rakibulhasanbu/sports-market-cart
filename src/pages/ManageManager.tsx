@@ -32,7 +32,7 @@ const ManageManager = () => {
 
     const handleUserRoleChange = async (id: string) => {
         const updateData = {
-            id, role: "seller"
+            id, role: "seller", branch: ""
         }
 
         await updateUser(updateData).unwrap().then(res => {

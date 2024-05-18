@@ -4,31 +4,39 @@ import { TbBrandProducthunt } from "react-icons/tb";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useAppSelector } from "../../redux/hook";
 import { HiOutlineUserGroup, HiOutlineUsers } from "react-icons/hi";
+import { UserRole } from "../../types/common";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
   const { user } = useAppSelector((state) => state.auth);
-  console.log(user);
-  const adminSideLinks = (user?.role === 'admin') ? [
+
+  const adminSideLinks = (user?.role === UserRole.ADMIN) ? [
     {
       path: "/sellers-list",
       Icon: HiOutlineUserGroup,
       label: "Sellers List",
-      relativePath2: "",
       relativePath: "",
     },
     {
       path: "/managers-list",
       Icon: HiOutlineUsers,
       label: "Managers List",
-      relativePath2: "",
       relativePath: "",
+    },
+  ] : [];
+
+  const managerSideLinks = (user?.role === UserRole.ADMIN || user?.role === UserRole.MANAGER) ? [
+    {
+      path: "/add-product",
+      Icon: MdOutlineAddShoppingCart,
+      label: "Add Product",
+      relativePath: "edit-product",
     },
   ] : [];
 
   const sidebarLinks = [
     {
-      item: (user?.role === 'admin') ? "System Users" : "",
+      item: (user?.role === UserRole.ADMIN) ? "System Users" : "",
       navs: [
         ...adminSideLinks
       ],
@@ -41,14 +49,8 @@ const Sidebar = () => {
           Icon: TbBrandProducthunt,
           path: "/",
           relativePath: "",
-          relativePath2: "",
         },
-        {
-          path: "/add-product",
-          Icon: MdOutlineAddShoppingCart,
-          label: "Add Product",
-          relativePath: "edit-product",
-        },
+        ...managerSideLinks
       ],
     },
     {
@@ -75,16 +77,14 @@ const Sidebar = () => {
                 <Link
                   to={nav.path}
                   className={`relative flex items-center gap-2 2xl:gap-3 pl-2 lg:pl-4 hover:bg-textDark hover:rounded-[10px]  hover:text-white hover:font-semibold group py-1.5 2xl:py-2 ${pathname === nav.path ||
-                    pathname === nav.relativePath ||
-                    pathname === nav.relativePath2
+                    pathname === nav.relativePath
                     ? "text-white font-semibold bg-textDark rounded-[10px]"
                     : "text-textSecondary"
                     }`}
                 >
                   <div
                     className={`w-9 h-9 flex items-center justify-center rounded-full group-hover:bg-[#494949] p-1 ${pathname === nav.path ||
-                      pathname === nav.relativePath ||
-                      pathname === nav.relativePath2
+                      pathname === nav.relativePath
                       ? "bg-[#494949]"
                       : "bg-[#F5F5F6]"
                       }`}
@@ -94,8 +94,7 @@ const Sidebar = () => {
                   <p className="">{nav.label}</p>
                   <div
                     className={`group-hover:bg-[#EC9414] absolute h-4 w-1 right-0 top-[35%] rounded-l ${pathname === nav.path ||
-                      pathname === nav.relativePath ||
-                      pathname === nav.relativePath2
+                      pathname === nav.relativePath
                       ? "bg-[#EC9414]"
                       : ""
                       }`}

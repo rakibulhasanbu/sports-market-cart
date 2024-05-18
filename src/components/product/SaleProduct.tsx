@@ -58,6 +58,7 @@ const SaleProduct = ({ record }: { record: any }) => {
             <div className='max-w-96 space-y-2 pt-2'>
                 <p className="font-medium">Product Name: {record?.name}</p>
                 <p className="font-medium">Product Price: {record?.price}</p>
+                <p className="font-medium">Product branch: {record?.branch}</p>
                 <div className=''>
                     <label htmlFor="Buyer-Name">Buyer Name</label>
                     <input

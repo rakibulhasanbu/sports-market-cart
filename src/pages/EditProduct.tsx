@@ -7,12 +7,14 @@ import AppFormInput from "../components/ui/AppFormInput";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useGetProductByIdQuery, useUpdatedProductMutation } from "../redux/features/products/productApi";
 import { useEffect } from "react";
+import AppFormSelect from "../components/ui/AppFormSelect";
 
 type TInputs = {
   name: string;
   price: number;
   quantity: number;
   type: string;
+  branch: string;
   brand: string;
   size: string;
   material: string;
@@ -34,6 +36,7 @@ const EditProduct = () => {
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
     setValue
   } = useForm<TInputs>();
@@ -61,6 +64,7 @@ const EditProduct = () => {
     setValue("name", data?.data?.name);
     setValue("price", data?.data?.price);
     setValue("brand", data?.data?.brand);
+    setValue("branch", data?.data?.branch);
     setValue("color", data?.data?.color);
     setValue("condition", data?.data?.condition);
     setValue("imageUrl", data?.data?.imageUrl);
@@ -70,6 +74,17 @@ const EditProduct = () => {
     setValue("type", data?.data?.type);
     setValue("weight", data?.data?.weight);
   }, [data, setValue])
+
+  const branchOptions = [
+    { value: 'Dhaka', label: 'Dhaka' },
+    { value: 'Barishal', label: 'Barishal' },
+    { value: 'Chattogram', label: 'Chattogram' },
+    { value: 'Khulna', label: 'Khulna' },
+    { value: 'Mymensingh', label: 'Mymensingh' },
+    { value: 'Rajshahi', label: 'Rajshahi' },
+    { value: 'Rangpur', label: 'Rangpur' },
+    { value: 'Sylhet', label: 'Sylhet' }
+  ];
 
   return (
     <>
@@ -98,6 +113,13 @@ const EditProduct = () => {
                   type="text"
                   label="Product Name"
                   error={errors.name}
+                />
+
+                <AppFormSelect
+                  name="branch"
+                  placeholder="Select Branch Name"
+                  control={control}
+                  options={branchOptions}
                 />
 
                 <AppFormInput
@@ -142,7 +164,14 @@ const EditProduct = () => {
                   label="Product condition"
                   error={errors.condition}
                 />
-
+                <AppFormInput
+                  name="imageUrl"
+                  required={true}
+                  register={register}
+                  type="text"
+                  label="Product imageUrl"
+                  error={errors.imageUrl}
+                />
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
@@ -183,14 +212,7 @@ const EditProduct = () => {
                 />
               </div>
 
-              <AppFormInput
-                name="imageUrl"
-                required={true}
-                register={register}
-                type="text"
-                label="Product imageUrl"
-                error={errors.imageUrl}
-              />
+
 
               <div className="flex items-center justify-center pt-4">
                 {isLoading ? (

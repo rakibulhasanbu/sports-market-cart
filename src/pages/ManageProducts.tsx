@@ -159,6 +159,11 @@ const ManageProducts = () => {
             className: "min-w-[115px]",
         },
         {
+            title: 'branch',
+            dataIndex: 'branch',
+            className: "min-w-[115px]",
+        },
+        {
             title: 'Type',
             dataIndex: 'type',
             className: "min-w-[115px]",
@@ -408,6 +413,8 @@ const ManageProducts = () => {
                     </div>
                 }
                 button={
+                    (user?.role === UserRole.ADMIN || user?.role === UserRole.MANAGER) &&
+
                     <Link to={"/add-product"}>
                         <button className="roundedBtn">Add New Product</button>
                     </Link>

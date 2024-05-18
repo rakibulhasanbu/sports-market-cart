@@ -6,12 +6,14 @@ import AppLoading from "../components/ui/AppLoading";
 import AppFormInput from "../components/ui/AppFormInput";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { useAddProductMutation } from "../redux/features/products/productApi";
+import AppFormSelect from "../components/ui/AppFormSelect";
 
 type TInputs = {
   name: string;
   price: number;
   quantity: number;
   type: string;
+  branch: string;
   brand: string;
   size: string;
   material: string;
@@ -28,7 +30,7 @@ const AddProduct = () => {
 
   const {
     register,
-    handleSubmit,
+    handleSubmit, control,
     formState: { errors },
   } = useForm<TInputs>();
 
@@ -50,6 +52,17 @@ const AddProduct = () => {
       }
     });
   };
+
+  const branchOptions = [
+    { value: 'Dhaka', label: 'Dhaka' },
+    { value: 'Barishal', label: 'Barishal' },
+    { value: 'Chattogram', label: 'Chattogram' },
+    { value: 'Khulna', label: 'Khulna' },
+    { value: 'Mymensingh', label: 'Mymensingh' },
+    { value: 'Rajshahi', label: 'Rajshahi' },
+    { value: 'Rangpur', label: 'Rangpur' },
+    { value: 'Sylhet', label: 'Sylhet' }
+  ];
 
   return (
     <>
@@ -78,6 +91,13 @@ const AddProduct = () => {
                   type="text"
                   label="Product Name"
                   error={errors.name}
+                />
+
+                <AppFormSelect
+                  name="branch"
+                  placeholder="Select Branch Name"
+                  control={control}
+                  options={branchOptions}
                 />
 
                 <AppFormInput
@@ -122,7 +142,14 @@ const AddProduct = () => {
                   label="Product condition"
                   error={errors.condition}
                 />
-
+                <AppFormInput
+                  name="imageUrl"
+                  required={true}
+                  register={register}
+                  type="text"
+                  label="Product imageUrl"
+                  error={errors.imageUrl}
+                />
               </div>
 
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
@@ -163,14 +190,7 @@ const AddProduct = () => {
                 />
               </div>
 
-              <AppFormInput
-                name="imageUrl"
-                required={true}
-                register={register}
-                type="text"
-                label="Product imageUrl"
-                error={errors.imageUrl}
-              />
+
 
               <div className="flex items-center justify-center pt-4">
                 {isLoading ? (
