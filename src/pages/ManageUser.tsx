@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useEffect, useMemo, useState } from "react";
 import AppTable from "../components/ui/AppTable";
 import { User } from "../types/common";
-import { useDeleteUserMutation, useEditUserMutation, useGetUsersQuery } from "../redux/features/user/userApi";
+import { useDeleteUserMutation, useEditUserMutation, useGetSellersQuery } from "../redux/features/user/userApi";
 
 const ManageUser = () => {
     const [page, setPage] = useState(1);
@@ -11,7 +11,6 @@ const ManageUser = () => {
 
     const queryString = useMemo(() => {
         const info = {
-            role: "user",
             limit: 10,
             page,
             searchTerm: search.length ? search : undefined,
@@ -26,7 +25,7 @@ const ManageUser = () => {
         return queryString;
     }, [page, search]);
 
-    const infoQuery = useGetUsersQuery(queryString);
+    const infoQuery = useGetSellersQuery(queryString);
 
     const [deleteUser, { isError, error, isLoading, isSuccess }] = useDeleteUserMutation();
     const [updateUser] = useEditUserMutation();
@@ -80,9 +79,9 @@ const ManageUser = () => {
             className: "min-w-[145px]",
             render: (_role: string, record: User) => {
                 return (
-                    <div className='flex items-center justify-evenly gap-1'>
+                    <div className=''>
                         <AppModal button={
-                            <button className="text-xs text-white px-4 py-1 rounded-full bg-bgred">Make Manager</button>}
+                            <button className="text-xs text-white px-4 py-1 rounded-full bg-primary">Make Manager</button>}
                             cancelButtonTitle="No, Don’t"
                             primaryButtonTitle="Yes. Make Manager"
                             primaryButtonAction={() => handleUserRoleChange(record?._id)}
@@ -101,7 +100,7 @@ const ManageUser = () => {
             className: "min-w-[145px]",
             render: (_text: string, record: User) => {
                 return (
-                    <div className='flex items-center justify-evenly gap-1'>
+                    <div className=''>
                         <AppModal button={
                             <button className="text-xs text-white px-4 py-1 rounded-full bg-bgred">Remove</button>}
                             cancelButtonTitle="No, Don’t"

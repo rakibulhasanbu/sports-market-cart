@@ -3,10 +3,10 @@ import { tagTypes } from "../../api/tagTypesList";
 
 export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query({
+    getSellers: builder.query({
       query: (query) => {
         return {
-          url: `/users?${query}`,
+          url: `/sellers?${query}`,
         };
       },
       providesTags: [tagTypes.user],
@@ -56,7 +56,7 @@ export const userApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetUsersQuery,
+  useGetSellersQuery,
   useAddUserMutation,
   useDeleteUserMutation,
   useEditUserMutation,
