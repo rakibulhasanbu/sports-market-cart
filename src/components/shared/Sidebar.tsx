@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { TbBrandProducthunt } from "react-icons/tb";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useAppSelector } from "../../redux/hook";
-import { HiOutlineUserGroup } from "react-icons/hi";
+import { HiOutlineUserGroup, HiOutlineUsers } from "react-icons/hi";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
@@ -14,6 +14,13 @@ const Sidebar = () => {
       path: "/sellers-list",
       Icon: HiOutlineUserGroup,
       label: "Sellers List",
+      relativePath2: "",
+      relativePath: "",
+    },
+    {
+      path: "/managers-list",
+      Icon: HiOutlineUsers,
+      label: "Managers List",
       relativePath2: "",
       relativePath: "",
     },

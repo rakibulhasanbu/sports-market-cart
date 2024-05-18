@@ -8,9 +8,12 @@ import { Link } from "react-router-dom";
 import AppPopover from "../components/ui/AppPopover";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import SaleProduct from "../components/product/SaleProduct";
+import { useAppSelector } from "../redux/hook";
+import { UserRole } from "../types/common";
 
 const ManageProducts = () => {
     const [_page, setPage] = useState(1)
+    const { user } = useAppSelector((state) => state.auth);
 
     const [filterOptions, setFilterOptions] = useState({
         priceRange: { min: 0, max: 1000 },
@@ -217,20 +220,25 @@ const ManageProducts = () => {
                                     </AppModal>
 
                                     <SaleProduct record={record} />
+                                    {(user?.role === UserRole.ADMIN || user?.role === UserRole.MANAGER) &&
+                                        <>
+                                            <button className="text-xs font-medium px-4 py-1 rounded-full bg-[#E6E6E7] hover:text-gray-800 "><Link to={`/create-variant/${record?._id}`}>Create Variant</Link></button>
+                                            <button className="text-xs font-medium px-4 py-1 rounded-full bg-[#E6E6E7] hover:text-gray-800 "><Link to={`/edit-product/${record?._id}`}>Update</Link></button>
+                                        </>
+                                    }
+                                    {(user?.role === UserRole.ADMIN) &&
+                                        <AppModal button={
+                                            <button className="text-xs text-white px-4 py-1 rounded-full w-full bg-bgred">Remove</button>}
+                                            cancelButtonTitle="No, Don’t"
+                                            primaryButtonTitle="Yes. Remove"
+                                            primaryButtonAction={() => deleteProduct(record?._id)}
+                                        >
+                                            <div className='max-w-80'>
+                                                <p className="text-center text-[#828282] pt-4 text-lg">Are you sure  Remove <span className="text-textDark font-medium">{record?.name}</span> from the user list?</p>
+                                            </div>
+                                        </AppModal>
+                                    }
 
-                                    <button className="text-xs font-medium px-4 py-1 rounded-full bg-[#E6E6E7] hover:text-gray-800 "><Link to={`/create-variant/${record?._id}`}>Create Variant</Link></button>
-                                    <button className="text-xs font-medium px-4 py-1 rounded-full bg-[#E6E6E7] hover:text-gray-800 "><Link to={`/edit-product/${record?._id}`}>Update</Link></button>
-
-                                    <AppModal button={
-                                        <button className="text-xs text-white px-4 py-1 rounded-full w-full bg-bgred">Remove</button>}
-                                        cancelButtonTitle="No, Don’t"
-                                        primaryButtonTitle="Yes. Remove"
-                                        primaryButtonAction={() => deleteProduct(record?._id)}
-                                    >
-                                        <div className='max-w-80'>
-                                            <p className="text-center text-[#828282] pt-4 text-lg">Are you sure  Remove <span className="text-textDark font-medium">{record?.name}</span> from the user list?</p>
-                                        </div>
-                                    </AppModal>
                                 </div>
                             }
                             button={

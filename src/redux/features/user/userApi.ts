@@ -11,6 +11,14 @@ export const userApi = baseApi.injectEndpoints({
       },
       providesTags: [tagTypes.user],
     }),
+    getManagers: builder.query({
+      query: (query) => {
+        return {
+          url: `/managers?${query}`,
+        };
+      },
+      providesTags: [tagTypes.user],
+    }),
     getUserById: builder.query({
       query: (id) => `/users/${id}`,
     }),
@@ -57,6 +65,7 @@ export const userApi = baseApi.injectEndpoints({
 
 export const {
   useGetSellersQuery,
+  useGetManagersQuery,
   useAddUserMutation,
   useDeleteUserMutation,
   useEditUserMutation,

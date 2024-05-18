@@ -49,10 +49,10 @@ const SaleProduct = ({ record }: { record: any }) => {
         <AppModal
             key={record?._id}
             button={
-                <button className="text-xs font-medium px-4 py-1 w-full rounded-full text-white bg-primary">Buy Now</button>
+                <button className="text-xs font-medium px-4 py-1 w-full rounded-full text-white bg-primary">Sell Now</button>
             }
             cancelButtonTitle="No, Don’t"
-            primaryButtonTitle="Yes. Buy"
+            primaryButtonTitle="Yes. Sell"
             primaryButtonAction={() => handleSale(record?._id)}
         >
             <div className='max-w-96 space-y-2 pt-2'>
