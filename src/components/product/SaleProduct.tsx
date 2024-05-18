@@ -2,8 +2,10 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useAddSaleMutation } from "../../redux/features/sales/saleApi";
 import AppModal from "../ui/AppModal";
+import { useAppSelector } from "../../redux/hook";
 
 const SaleProduct = ({ record }: { record: any }) => {
+    const { user } = useAppSelector((state) => state.auth)
     const [addSale] = useAddSaleMutation();
 
     const handleSale = async (id: string) => {
@@ -12,7 +14,9 @@ const SaleProduct = ({ record }: { record: any }) => {
             buyerName: modalData?.buyerName,
             saleDate: modalData?.saleDate,
             productId: id,
+            userId: user?.userId
         }
+
         console.log(submitData);
 
         await addSale(submitData).unwrap().then((res: {

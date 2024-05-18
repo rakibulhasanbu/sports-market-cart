@@ -5,11 +5,12 @@ import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { useAppSelector } from "../../redux/hook";
 import { HiOutlineUserGroup, HiOutlineUsers } from "react-icons/hi";
 import { UserRole } from "../../types/common";
+import { GiHistogram } from "react-icons/gi";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
   const { user } = useAppSelector((state) => state.auth);
-
+  console.log(user);
   const adminSideLinks = (user?.role === UserRole.ADMIN) ? [
     {
       path: "/sellers-list",
@@ -56,6 +57,12 @@ const Sidebar = () => {
     {
       item: "Sales",
       navs: [
+        {
+          label: "User Sales History",
+          path: `/user-sales-history/${user?.userId}`,
+          relativePath: "",
+          Icon: GiHistogram,
+        },
         {
           label: "Sales History",
           path: "/sales-history",

@@ -10,6 +10,7 @@ import EditProduct from "../pages/EditProduct";
 import CreateVariant from "../pages/CreateVariant";
 import ManageUser from "../pages/ManageUser";
 import ManageManager from "../pages/ManageManager";
+import ManageUserSales from "../pages/ManageUserSales";
 
 const router = createBrowserRouter([
     {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
             {
                 path: "/managers-list",
                 element: <ManageManager />
+            },
+            {
+                path: "/user-sales-history/:id",
+                element: <ManageUserSales />
             },
         ]
     },

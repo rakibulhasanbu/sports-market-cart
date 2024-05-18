@@ -10,6 +10,15 @@ const saleApi = baseApi.injectEndpoints({
       }),
       providesTags: [tagTypes.sale],
     }),
+
+    getUserSalesHistory: builder.query({
+      query: (id) => ({
+        url: `/user-sales-history/${id}`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.sale],
+    }),
+
     addSale: builder.mutation({
       query: (saleData) => ({
         url: "/sales",
@@ -21,4 +30,8 @@ const saleApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useGetSalesHistoryQuery, useAddSaleMutation } = saleApi;
+export const {
+  useGetSalesHistoryQuery,
+  useGetUserSalesHistoryQuery,
+  useAddSaleMutation,
+} = saleApi;
