@@ -58,7 +58,7 @@ const Sidebar = () => {
       item: "Sales",
       navs: [
         {
-          label: "User Sales History",
+          label: "Orders",
           path: `/user-sales-history/${user?.userId}`,
           relativePath: "",
           Icon: GiHistogram,

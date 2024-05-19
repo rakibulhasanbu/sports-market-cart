@@ -3,11 +3,12 @@ import { toast } from "react-toastify";
 import { useAddSaleMutation } from "../../redux/features/sales/saleApi";
 import AppModal from "../ui/AppModal";
 import { useAppSelector } from "../../redux/hook";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const SaleProduct = ({ record }: { record: any }) => {
     const { user } = useAppSelector((state) => state.auth)
     const [addSale] = useAddSaleMutation();
-
+    const navigate = useNavigate();
     const handleSale = async (id: string) => {
         const submitData = {
             quantity: +modalData?.quantity,
@@ -26,6 +27,7 @@ const SaleProduct = ({ record }: { record: any }) => {
                 toast.error(res?.data?.message || "Something went wrong");
             }
             toast.success("product Buy successful!");
+            navigate(`/user-sales-history/${user?.userId}`);
 
         }).catch((res: {
             data: any;

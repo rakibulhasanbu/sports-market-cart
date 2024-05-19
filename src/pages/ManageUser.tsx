@@ -1,10 +1,9 @@
 import AppModal from "../components/ui/AppModal";
 import { toast } from "react-toastify";
-import { SetStateAction, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AppTable from "../components/ui/AppTable";
 import { User } from "../types/common";
 import { useDeleteUserMutation, useEditUserMutation, useGetSellersQuery } from "../redux/features/user/userApi";
-import AppSelect from "../components/ui/AppSelect";
 
 const ManageUser = () => {
     const [page, setPage] = useState(1);
