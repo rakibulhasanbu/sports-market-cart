@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@onedoc/react-print": "^0.1.133",
+    "@react-pdf/renderer": "^3.4.4",
     "@reduxjs/toolkit": "^2.2.3",
     "antd": "^5.17.2",
     "framer-motion": "^11.1.7",
+    "jspdf": "^2.5.1",
     "jwt-decode": "^4.0.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",

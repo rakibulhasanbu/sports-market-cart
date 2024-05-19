@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useAddSaleMutation } from "../../redux/features/sales/saleApi";
 import AppModal from "../ui/AppModal";
 import { useAppSelector } from "../../redux/hook";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SaleProduct = ({ record }: { record: any }) => {
     const { user } = useAppSelector((state) => state.auth)

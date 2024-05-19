@@ -20,7 +20,7 @@ const ManageUserSales = () => {
     const downloadPDF = () => {
         const input = componentRef.current;
         if (input) {
-            html2canvas(input, { scale: 2, useCORS: true }).then((canvas) => {
+            html2canvas(input, { scale: 2, useCORS: true }).then((canvas: any) => {
                 const imgData = canvas.toDataURL('image/png');
                 const pdf = new jsPDF({
                     orientation: 'portrait',

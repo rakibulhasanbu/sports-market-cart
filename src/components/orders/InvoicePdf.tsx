@@ -1,5 +1,5 @@
 import React from "react";
-import { Footnote, PageBottom, Tailwind } from "@onedoc/react-print";
+import { PageBottom, Tailwind } from "@onedoc/react-print";
 import { formatDate } from "../../utils/formateDate";
 
 const InvoicePdf = React.forwardRef<HTMLDivElement, { record?: any }>(({ record }, ref) => {
